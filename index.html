@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heili Aavola — CV</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f0;
+      --gray: #6b6b6b;
+      --line: rgba(10,10,10,0.15);
+      --accent: #d4380d;
+      --mono: 'Space Mono', monospace;
+      --sans: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== EXPOSED GRID LINES ===== */
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 0;
+    }
+    .grid-line {
+      border-right: 1px solid var(--line);
+      height: 100%;
+    }
+    .grid-line:last-child { border-right: none; }
+
+    /* ===== LAYOUT ===== */
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 3vw;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== HEADER / NAV ===== */
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 0;
+      padding: 1.25rem 0;
+      border-bottom: 2px solid var(--black);
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      z-index: 10;
+    }
+    .topbar > div { padding: 0 1rem; }
+    .topbar .name { font-weight: 700; }
+    .topbar a { color: var(--black); text-decoration: none; }
+    .topbar a:hover { color: var(--accent); }
+    .topbar .date { text-align: right; color: var(--gray); }
+
+    /* ===== HERO ===== */
+    .hero {
+      margin-top: 4rem;
+      padding: 6rem 0 4rem;
+      border-bottom: 2px solid var(--black);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      min-height: 70vh;
+      align-items: end;
+    }
+    .hero-text h1 {
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero-text h1 span {
+      display: block;
+      color: var(--accent);
+    }
+    .hero-meta {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 2;
+      color: var(--gray);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      justify-content: end;
+    }
+    .hero-meta .value { color: var(--black); font-weight: 700; }
+    .hero-meta .label { text-transform: uppercase; letter-spacing: 0.1em; }
+
+    .hero-visual {
+      position: relative;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-visual .geo-box {
+      width: 220px;
+      height: 220px;
+      border: 3px solid var(--black);
+      position: relative;
+    }
+    .hero-visual .geo-box::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: -12px;
+      bottom: -12px;
+      border: 3px solid var(--black);
+      opacity: 0.3;
+    }
+    .hero-visual .geo-box::after {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      width: 60px;
+      height: 60px;
+      background: var(--accent);
+    }
+
+    /* ===== SECTION HEADERS ===== */
+    .section-heading {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 1rem 0;
+      border-top: 2px solid var(--black);
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: baseline;
+    }
+    .section-heading .num {
+      font-variant-numeric: tabular-nums;
+      color: var(--accent);
+    }
+
+    /* ===== TIMELINE ===== */
+    .timeline {
+      padding: 0;
+    }
+    .tl-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 140px;
+      gap: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .tl-row > * {
+      padding: 1.5rem 1rem;
+    }
+    .tl-year {
+      font-family: var(--mono);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      border-right: 1px solid var(--line);
+    }
+    .tl-content h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .tl-content p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+    .tl-place {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      border-left: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+    }
+
+    /* ===== BENTO GRID ===== */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1px;
+      background: var(--black);
+      border: 2px solid var(--black);
+    }
+    .bento-cell {
+      background: var(--white);
+      padding: 2rem;
+    }
+    .bento-cell.w2 { grid-column: span 2; }
+    .bento-cell.w3 { grid-column: span 3; }
+    .bento-cell.w4 { grid-column: span 4; }
+    .bento-cell.w6 { grid-column: span 6; }
+    .bento-cell.w8 { grid-column: span 8; }
+    .bento-cell h3 {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+    .bento-cell p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .bento-cell a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+    }
+    .bento-cell a:hover { color: var(--black); border-color: var(--black); }
+
+    /* ===== PUBLICATIONS ===== */
+    .pub-list {
+      list-style: none;
+    }
+    .pub-item {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 1rem;
+    }
+    .pub-year {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    .pub-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+    .pub-venue {
+      font-size: 0.8rem;
+      color: var(--gray);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+    }
+
+    /* ===== SKILLS SECTION ===== */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--black);
+      border: 2px solid var(--black);
+    }
+    .skill-item {
+      background: var(--white);
+      padding: 1rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .skill-item strong {
+      display: block;
+      color: var(--accent);
+      font-size: 1.4rem;
+      margin-bottom: 0.25rem;
+      font-weight: 700;
+    }
+
+    /* ===== CONTACT STRIP ===== */
+    .contact-strip {
+      background: var(--black);
+      color: var(--white);
+      padding: 4rem 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .contact-strip h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .contact-strip a {
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+    }
+    .contact-strip .links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      font-size: 0.85rem;
+      justify-content: center;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 1.5rem 0;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .grid-overlay { display: none; }
+      .topbar { grid-template-columns: 1fr; font-size: 0.65rem; }
+      .topbar > div:nth-child(2), .topbar > div:nth-child(3) { display: none; }
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 3rem 0 2rem;
+        margin-top: 3rem;
+        min-height: auto;
+      }
+      .hero-visual { display: none; }
+      .tl-row { grid-template-columns: 60px 1fr; }
+      .tl-place { display: none; }
+      .bento-cell.w2, .bento-cell.w3, .bento-cell.w4,
+      .bento-cell.w6, .bento-cell.w8 { grid-column: span 12; }
+      .contact-strip { grid-template-columns: 1fr; padding: 2rem 0; }
+      .footer { grid-template-columns: 1fr; }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- EXPOSED GRID -->
+  <div class="grid-overlay" aria-hidden="true">
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+  </div>
+
+  <div class="page">
+
+    <!-- TOP BAR -->
+    <nav class="topbar">
+      <div class="name">Heili Aavola</div>
+      <div style="display:flex;gap:1.5rem;align-items:center;">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#research">Research</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="date">2026.05.29</div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero reveal">
+      <div class="hero-text">
+        <h1>
+          Heili<br /><span>Aavola</span>
+        </h1>
+      </div>
+      <div class="hero-meta">
+        <span class="label">Role</span>
+        <span class="value">Junior Research Fellow in Machine Learning</span>
+        <span class="label">Institution</span>
+        <span class="value">Chair of Data Science, Institute of Computer Science, University of Tartu</span>
+        <span class="label">Location</span>
+        <span class="value">Tartu, Estonia</span>
+        <span class="label">ORCID</span>
+        <span class="value"><a href="https://orcid.org/0000-0003-4759-665X" target="_blank">0000-0003-4759-665X</a></span>
+      </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-heading">
+        <span>00 / About</span>
+        <span class="num">01</span>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:3rem;padding:2rem 0;">
+        <div>
+          <p style="font-size:1.25rem;line-height:1.6;margin-bottom:1.5rem;">
+            Data scientist and researcher at the University of Tartu with an interdisciplinary background spanning <strong>chemistry</strong>, <strong>microfluidics</strong>, and <strong>machine learning</strong>. Currently a PhD student working on uncertainty quantification and trustworthy AI.
+          </p>
+          <p style="color:var(--gray);font-size:0.9rem;line-height:1.6;margin-bottom:1.5rem;">
+            Heili's academic journey began in the natural sciences: a BSc in Environmental Engineering and an MSc in Gene Technology from the University of Tartu, before transitioning into data science. She holds an MSc in Andmeteadus (Data Science) and has published on printed porous materials for microfluidic applications.
+          </p>
+          <p style="color:var(--gray);font-size:0.9rem;line-height:1.6;">
+            Outside research, she is passionate about the arts, playing the violin, hiking, running, orienteering, and bouldering.
+          </p>
+        </div>
+        <div style="font-family:var(--mono);font-size:0.7rem;color:var(--gray);line-height:2.2;">
+          <div><span style="color:var(--accent)">ED:</span> 2026-05-29</div>
+          <div><span style="color:var(--accent)">FMT:</span> Helvetica Neue</div>
+          <div><span style="color:var(--accent)">MOD:</span> Inter + Space Mono</div>
+          <div><span style="color:var(--accent)">COL:</span> #0a0a0a / #d4380d</div>
+          <div><span style="color:var(--accent)">BND:</span> 2px solid black</div>
+          <div><span style="color:var(--accent)">GRID:</span> 12-col exposed</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE / EDUCATION -->
+    <section id="experience">
+      <div class="section-heading">
+        <span>01 / Experience &amp; Education</span>
+        <span class="num">02</span>
+      </div>
+      <div class="timeline">
+        <div class="tl-row reveal">
+          <div class="tl-year">2023</div>
+          <div class="tl-content">
+            <h3>PhD Student, Machine Learning</h3>
+            <p>Machine Learning research group, Institute of Computer Science, University of Tartu</p>
+          </div>
+          <div class="tl-place">Tartu, EE</div>
+        </div>
+        <div class="tl-row reveal">
+          <div class="tl-year">2023</div>
+          <div class="tl-content">
+            <h3>Junior Research Fellow</h3>
+            <p>Chair of Data Science, Institute of Computer Science</p>
+          </div>
+          <div class="tl-place">Tartu, EE</div>
+        </div>
+        <div class="tl-row reveal">
+          <div class="tl-year">2022</div>
+          <div class="tl-content">
+            <h3>MSc, Andmeteadus (Data Science)</h3>
+            <p>University of Tartu</p>
+          </div>
+          <div class="tl-place">Tartu, EE</div>
+        </div>
+        <div class="tl-row reveal">
+          <div class="tl-year">2020</div>
+          <div class="tl-content">
+            <h3>MSc, Gene Technology</h3>
+            <p>University of Tartu</p>
+          </div>
+          <div class="tl-place">Tartu, EE</div>
+        </div>
+        <div class="tl-row reveal">
+          <div class="tl-year">2019</div>
+          <div class="tl-content">
+            <h3>BSc, Environmental Engineering</h3>
+            <p>University of Tartu</p>
+          </div>
+          <div class="tl-place">Tartu, EE</div>
+        </div>
+        <div class="tl-row reveal">
+          <div class="tl-year">—</div>
+          <div class="tl-content">
+            <h3>Teaching Assistant</h3>
+            <p>Introduction to Data Science (IDS), with Prof. Meelis Kull</p>
+          </div>
+          <div class="tl-place">IDS TA</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEARCH / PUBLICATIONS -->
+    <section id="research">
+      <div class="section-heading">
+        <span>02 / Publications</span>
+        <span class="num">03</span>
+      </div>
+      <ul class="pub-list">
+        <li class="pub-item reveal">
+          <span class="pub-year">2021</span>
+          <div>
+            <div class="pub-title">Printed Porous Materials in Microfluidics: A Novel Approach to Lab-on-Chip Systems</div>
+            <div class="pub-venue">Evard, E., Aavola, H., Tamm, T., Saar, I., Leito, I. et al. — Micromachines, 12(6), 671. DOI: 10.3390/mi12060671</div>
+          </div>
+        </li>
+        <li class="pub-item reveal">
+          <span class="pub-year">—</span>
+          <div>
+            <div class="pub-title">Uncertainty Quantification in Machine Learning</div>
+            <div class="pub-venue">Current research focus — ML research group, Univ. of Tartu</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- BENTO: SKILLS / TOOLS -->
+    <section>
+      <div class="section-heading">
+        <span>03 / Skills &amp; Tools</span>
+        <span class="num">04</span>
+      </div>
+      <div class="bento reveal" style="padding:0;margin-top:0;">
+        <div class="bento-cell w6">
+          <h3>Technical</h3>
+          <p>Machine Learning &bull; Deep Learning &bull; Python &bull; Statistical Analysis &bull; Scientific Computing &bull; Data Visualization</p>
+        </div>
+        <div class="bento-cell w3">
+          <h3>Sciences</h3>
+          <p>Analytical Chemistry &bull; Microfluidics &bull; Gene Technology</p>
+        </div>
+        <div class="bento-cell w3">
+          <h3>Research</h3>
+          <p>Uncertainty Estimation &bull; Calibration &bull; Trustworthy AI &bull; Scientific Writing</p>
+        </div>
+        <div class="bento-cell w4">
+          <h3>Languages</h3>
+          <p>English &bull; Estonian</p>
+        </div>
+        <div class="bento-cell w4">
+          <h3>Creative</h3>
+          <p>Violin &bull; Orienteering &bull; Bouldering</p>
+        </div>
+        <div class="bento-cell w4">
+          <h3>Arts &amp; Sports</h3>
+          <p>Hiking &bull; Running &bull; Music</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINKS -->
+    <section>
+      <div class="section-heading">
+        <span>04 / Profiles &amp; Links</span>
+        <span class="num">05</span>
+      </div>
+      <div class="bento reveal" style="padding:0;margin-top:0;">
+        <div class="bento-cell w3">
+          <h3>ETIS</h3>
+          <p><a href="https://www.etis.ee/CV/Heili_Aavola/eng/" target="_blank">etis.ee/CV/Heili_Aavola</a></p>
+        </div>
+        <div class="bento-cell w3">
+          <h3>University</h3>
+          <p><a href="https://ut.ee/en/employee/heili-aavola" target="_blank">University of Tartu</a></p>
+        </div>
+        <div class="bento-cell w3">
+          <h3>ResearchGate</h3>
+          <p><a href="https://www.researchgate.net/profile/Heili-Aavola" target="_blank">ResearchGate</a></p>
+        </div>
+        <div class="bento-cell w3">
+          <h3>ML Group</h3>
+          <p><a href="https://ml.cs.ut.ee/" target="_blank">ml.cs.ut.ee</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="contact-strip reveal">
+        <h2>Get in touch.</h2>
+        <div class="links">
+          <a href="mailto:heili.aavola@ut.ee">heili.aavola@ut.ee</a>
+          <a href="mailto:heili.aavola@gmail.com">heili.aavola@gmail.com</a>
+          <a href="https://orcid.org/0000-0003-4759-665X" target="_blank">ORCID: 0000-0003-4759-665X</a>
+          <a href="https://ee.linkedin.com/in/heili-aavola" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>Portfolio &amp; CV &mdash; Heili Aavola</span>
+      <span>Generated 2026-05-29 &mdash; Source: ut.ee, etis.ee, orcid.org, ml.cs.ut.ee</span>
+    </footer>
+
+  </div><!-- /.page -->
+
+  <script>
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
